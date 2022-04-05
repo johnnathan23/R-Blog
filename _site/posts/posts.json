@@ -11,9 +11,9 @@
     ],
     "date": "2022-04-05",
     "categories": [],
-    "contents": "\r\n\r\n\r\n\r\n",
+    "contents": "\r\nLearn more about creating blogs with Distill at:https://rstudio.github.io/distill/blog.html\"\r\n\r\n\r\n\r\n",
     "preview": {},
-    "last_modified": "2022-04-05T17:27:25+08:00",
+    "last_modified": "2022-04-05T17:34:13+08:00",
     "input_file": "welcome.knit.md"
   }
 ]
