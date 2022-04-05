@@ -1,11 +1,11 @@
 [
   {
     "path": "posts/welcome/",
-    "title": "Welcome to Projects",
-    "description": "Welcome to our new blog, Projects. We hope you enjoy \nreading what we have to say!",
+    "title": "Modulatory Effects of Language Context on Executive Functioning in Multilinguals",
+    "description": "We investigate the effects of different language contexts (i.e., Monolingual versus Bilingual contexts) on the adaptive changes on Executive Function in individuals with different degrees of multilingualism",
     "author": [
       {
-        "name": "Nora Jones",
+        "name": "Jonathan Choo",
         "url": "https://example.com/norajones"
       }
     ],
@@ -13,7 +13,7 @@
     "categories": [],
     "contents": "\r\n\r\n\r\n\r\n",
     "preview": {},
-    "last_modified": "2022-04-05T16:29:21+08:00",
-    "input_file": {}
+    "last_modified": "2022-04-05T17:27:25+08:00",
+    "input_file": "welcome.knit.md"
   }
 ]
