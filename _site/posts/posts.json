@@ -1,5 +1,22 @@
 [
   {
+    "path": "posts/2022-04-12-creating-a-raincloud-plot/",
+    "title": "Creating a Raincloud Plot",
+    "description": "This is a short introduction to creating a Raincloud plot, which combines the data visualization of a violin plot with a density plot.",
+    "author": [
+      {
+        "name": "Jonathan Choo",
+        "url": "https://example.com/norajones"
+      }
+    ],
+    "date": "2022-04-12",
+    "categories": [],
+    "contents": "\r\nDistill is a publication format for scientific and technical writing,\r\nnative to the web.\r\nLearn more about using Distill at https://rstudio.github.io/distill.\r\n\r\n\r\n\r\n",
+    "preview": {},
+    "last_modified": "2022-04-12T13:58:48+08:00",
+    "input_file": "creating-a-raincloud-plot.knit.md"
+  },
+  {
     "path": "posts/welcome/",
     "title": "Modulatory Effects of Language Context on Executive Functioning in Multilinguals",
     "description": "We investigate the effects of different language contexts (i.e., Monolingual versus Bilingual contexts) on the adaptive changes on Executive Function in individuals with different degrees of multilingualism",

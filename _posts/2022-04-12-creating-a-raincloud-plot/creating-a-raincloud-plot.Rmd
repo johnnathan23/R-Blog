@@ -1,0 +1,23 @@
+---
+title: "Creating a Raincloud Plot"
+description: |
+  This is a short introduction to creating a Raincloud plot, which combines the data visualization of a violin plot with a density plot. 
+author:
+  - name: Jonathan Choo
+    url: https://example.com/norajones
+date: 2022-04-12
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+Distill is a publication format for scientific and technical writing, native to the web.
+
+Learn more about using Distill at <https://rstudio.github.io/distill>.
+
+
