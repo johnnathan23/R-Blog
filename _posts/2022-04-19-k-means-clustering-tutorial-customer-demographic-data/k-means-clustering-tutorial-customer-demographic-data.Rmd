@@ -1,7 +1,8 @@
 ---
 title: "K-Means Clustering Tutorial: Customer Demographic Data"
 description: |
-  A short description of the post.
+  In this post, we introduce what k-means clustering is, how it works in R, how to interpret
+  the output, and the limitations associated with such unsupervised machine learning modelling
 author:
   - name: Jonathan Choo
     url: https://example.com/norajones
@@ -11,12 +12,11 @@ output:
     self_contained: false
 ---
 
-
+Test
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 
-read.csv("customer_data.csv")
 ```
 
 
