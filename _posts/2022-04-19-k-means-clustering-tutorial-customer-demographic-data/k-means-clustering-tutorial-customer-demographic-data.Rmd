@@ -79,12 +79,19 @@ Let's break this down step-by-step:
  + *centers* = Determines the number of centroids in a given dataset. Centroids are imaginary or real locations representing the center of a cluster
  + *nstart* = Specifies the number of random data sets used to run the algorithm. Optionally, you can also explicitly determine how many times this process runs by including a *iter.max* argument (default = 10). [Andrea Grianti](https://andrea-grianti.medium.com/kmeans-parameters-in-rstudio-explained-c493ec5a05df) provides an excellent delineation between *nstart* and *interations*, both have similar but distinct meanings:
  
- >if you want 3 clusters and you specify nstart = 10 it extracts 3 sets of data, 10 times, and for each of these times, the algorithm is run (up to iter.max = # of iterations) and the cost function is evaluated so that the lowest is then chosen as the result - Andrea Grianti -
+ >if you want 3 clusters and you specify nstart = 10 it extracts 3 sets of data, 10 times, and for each of these times, the algorithm is run (up to iter.max = # of iterations) and the centroid setting that outputs the smallest within-cluster sum of squares is then chosen as the result - Andrea Grianti -
  
 3. In the above function, we *arbitrarily* determined the number of centers to be 5 and to sample our dataset using 5 hypothetical centroids 20 times to find the setting with the minimum amount of variance (i.e., within-cluster sum of squares). Because we did not determine the number of max interations, it defaults to 10 interations, that is, it runs the sampling for the minimum within-cluster SS 10 times.
+
+Below is the output from our clustering analysis
 
 ```{r K-Means Clustering 2, echo=FALSE}
 model
 
 ```
 
+There are several important things to note in this output, let us break it down:
+
+1. 
+
+Recall that in the earlier section, we mention that there is a method to optimally calculate for the best number of clusters for your dataset? 
