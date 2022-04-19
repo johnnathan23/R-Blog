@@ -14,7 +14,7 @@
     "contents": "\r\nDistill is a publication format for scientific and technical writing,\r\nnative to the web.\r\nLearn more about using Distill at https://rstudio.github.io/distill.\r\n\r\n\r\n\r\n",
     "preview": {},
     "last_modified": "2022-04-12T13:58:48+08:00",
-    "input_file": "creating-a-raincloud-plot.knit.md"
+    "input_file": {}
   },
   {
     "path": "posts/welcome/",
@@ -31,6 +31,6 @@
     "contents": "\r\nLearn more about creating blogs with Distill at:https://rstudio.github.io/distill/blog.html\"\r\n\r\n\r\n\r\n",
     "preview": {},
     "last_modified": "2022-04-05T17:34:13+08:00",
-    "input_file": "welcome.knit.md"
+    "input_file": {}
   }
 ]

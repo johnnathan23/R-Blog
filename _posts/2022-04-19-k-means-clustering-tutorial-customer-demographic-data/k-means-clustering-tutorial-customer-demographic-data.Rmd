@@ -1,0 +1,24 @@
+---
+title: "K-Means Clustering Tutorial: Customer Demographic Data"
+description: |
+  A short description of the post.
+author:
+  - name: Jonathan Choo
+    url: https://example.com/norajones
+date: 2022-04-19
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+read.csv("customer_data.csv")
+```
+
+
+
+
