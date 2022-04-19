@@ -6,14 +6,14 @@
     "author": [
       {
         "name": "Jonathan Choo",
-        "url": "https://example.com/norajones"
+        "url": {}
       }
     ],
     "date": "2022-04-19",
     "categories": [],
-    "contents": "\r\nTest\r\n\r\n\r\n\r\n",
+    "contents": "\r\nWelcome to this short introduction to k-means! First, let me explain\r\nwhat k-means is to give you a better idea on what we will be learning\r\nhere.\r\nK-means clustering is a form of unsupervised machine\r\nlearning clustering algorithm which falls under the “partitioning\r\nclustering” umbrella. It is unsupervised because it analyses unlabeled\r\ndata sets without human input. It is a very popular ML clustering\r\nalgorithm, and very simple to implement in any data set. The other type\r\nof clustering is Hierachical clustering, which we will not be touching\r\non here in this post. However, within partitioning clustering, we also\r\nhave another algorithm called Fuzzy C-Means clustering.\r\nThe main difference between these two algorithms is that K-means\r\nclustering assumes that every data point belongs to one single\r\n“cluster”. Fuzzy C-Means clustering, on the other hand, relaxes this\r\nassumption and provides leeway for some data points to be in two or more\r\nclusters. Where you would use K-means clustering for understanding\r\nsimple patterns in the data set (i.e., what are the characteristics of\r\ncertain groups), you would use Fuzzy C-Means clustering when the group\r\nmembership criteria are not as clear cut. For the purposes of this\r\ntutorial, we will just focus on K-means clustering\r\nLet’s begin by first reading the data set (data obtained from\r\nKaggle)\r\n\r\n\r\n\r\n",
     "preview": {},
-    "last_modified": "2022-04-19T10:37:03+08:00",
+    "last_modified": "2022-04-19T10:52:12+08:00",
     "input_file": "k-means-clustering-tutorial-customer-demographic-data.knit.md"
   },
   {

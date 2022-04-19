@@ -5,17 +5,24 @@ description: |
   the output, and the limitations associated with such unsupervised machine learning modelling
 author:
   - name: Jonathan Choo
-    url: https://example.com/norajones
+    Affiliation: University of Nottingham, Malaysia
 date: 2022-04-19
 output:
   distill::distill_article:
     self_contained: false
 ---
 
-Test
+Welcome to this short introduction to k-means! First, let me explain what k-means is to give you a better idea on what we will be learning here. 
+
+K-means clustering is a form of **unsupervised machine** learning clustering algorithm which falls under the "partitioning clustering" umbrella. It is unsupervised because it analyses unlabeled data sets without human input. It is a very popular ML clustering algorithm, and very simple to implement in any data set. The other type of clustering is Hierachical clustering, which we will not be touching on here in this post. However, within partitioning clustering, we also have another algorithm called Fuzzy C-Means clustering. 
+
+The main difference between these two algorithms is that K-means clustering assumes that every data point belongs to one single "cluster". Fuzzy C-Means clustering, on the other hand, relaxes this assumption and provides leeway for some data points to be in two or more clusters. Where you would use K-means clustering for understanding simple patterns in the data set (i.e., what are the characteristics of certain groups), you would use Fuzzy C-Means clustering when the group membership criteria are not as clear cut. For the purposes of this tutorial, we will just focus on K-means clustering
+
+Let's begin by first reading the data set (data obtained from Kaggle)
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+
 
 ```
 
