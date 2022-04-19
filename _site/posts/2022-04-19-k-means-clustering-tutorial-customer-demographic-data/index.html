@@ -2107,10 +2107,14 @@ with such unsupervised machine learning modelling</p></p>
 <p>Welcome to this short introduction to k-means! First, let me explain
 what k-means is to give you a better idea on what we will be learning
 here.</p>
-<p>K-means clustering is a form of <strong>unsupervised machine</strong>
-learning clustering algorithm which falls under the “partitioning
-clustering” umbrella. It is unsupervised because it analyses unlabeled
-data sets without human input. It is a very popular ML clustering
+<p>K-means clustering is a form of <strong>unsupervised machine
+learning</strong> clustering algorithm which falls under the
+“partitioning clustering” umbrella. Unlike supervised machine learning,
+unsupervised ML does not have access to ground truth to compare the
+output of the clustering algorithm to the true labels to evaluate its
+performance. We only want to try to investigate the structure of the
+data by grouping the data points into distinct subgroups that are as
+similar together as possible. It is a very popular ML clustering
 algorithm, and very simple to implement in any data set. The other type
 of clustering is Hierachical clustering, which we will not be touching
 on here in this post. However, within partitioning clustering, we also
@@ -2124,9 +2128,118 @@ simple patterns in the data set (i.e., what are the characteristics of
 certain groups), you would use Fuzzy C-Means clustering when the group
 membership criteria are not as clear cut. For the purposes of this
 tutorial, we will just focus on K-means clustering</p>
-<p>Let’s begin by first reading the data set (data obtained from
-Kaggle)</p>
-<div class="sourceCode" id="cb1"><pre
+<p>Let’s begin by first understanding what kind of data we are working
+with. You can download the data from <a
+href="https://www.kaggle.com/datasets/vjchoudhary7/customer-segmentation-tutorial-in-python">Kaggle</a></p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"customer_data.csv"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  CustomerID Gender Age Annual_Income.k. Spending_Score
+1          1   Male  19               15             39
+2          2   Male  21               15             81
+3          3 Female  20               16              6
+4          4 Female  23               16             77
+5          5 Female  31               17             40
+6          6 Female  22               17             76</code></pre>
+</div>
+<p>Here, we have four usable data columns: Gender, Age, Annual income
+and Spending Score. For us to generate meaningful k-means clusters, we
+first need to ensure that the data we have are numbers, not factors or
+characters. Because Gender is in characters, we either can filter out
+Males and Females into their separate data sets, or, we can include them
+into the analysis by dummy-coding them. We will include them into the
+analysis by dummy coding them</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df</span><span class='op'>$</span><span class='va'>Gender</span><span class='op'>[</span><span class='va'>df</span><span class='op'>$</span><span class='va'>Gender</span> <span class='op'>==</span> <span class='st'>"Male"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
+<span class='va'>df</span><span class='op'>$</span><span class='va'>Gender</span><span class='op'>[</span><span class='va'>df</span><span class='op'>$</span><span class='va'>Gender</span> <span class='op'>==</span> <span class='st'>"Female"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>2</span>
+<span class='va'>df</span><span class='op'>$</span><span class='va'>Gender</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>$</span><span class='va'>Gender</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Because CustomerID is meaningless, merely as a way to differentiate
+customers, we should remove it from the dataframe to ensure only the
+relevant data is used for clustering</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>df</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  Gender Age Annual_Income.k. Spending_Score
+1      1  19               15             39
+2      1  21               15             81
+3      2  20               16              6
+4      2  23               16             77
+5      2  31               17             40
+6      2  22               17             76</code></pre>
+</div>
+<p>Our dataframe is now prepared for clustering analysis. Before we
+proceed, let us try to understand what we are trying to learn from this
+analysis. In the dataframe, you can see the age, annual income and
+spending score attached to each customer. One insightful data that we
+can try to garner from this analysis is to determine the characteristics
+of subgroups. For example:</p>
+<ul>
+<li>Would older adults with a higher annual income have a higher
+spending score or would they spend less?</li>
+<li>Would there be any difference when we compare between genders?</li>
+</ul>
+<p>These are some questions that we can answer based on the clustering
+analysis that we will implement. Now, let us load in the required
+packages and run the clustering analysis</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://svn.r-project.org/R-packages/trunk/cluster/'>cluster</a></span><span class='op'>)</span>
+
+<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/kmeans.html'>kmeans</a></span><span class='op'>(</span><span class='va'>df</span>, centers <span class='op'>=</span> <span class='fl'>5</span>, nstart <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span>
+<span class='va'>model</span>
+</code></pre>
+</div>
+<pre><code>K-means clustering with 5 clusters of sizes 36, 23, 23, 79, 39
+
+Cluster means:
+    Gender      Age Annual_Income.k. Spending_Score
+1 1.472222 40.66667         87.75000       17.58333
+2 1.608696 25.52174         26.30435       78.56522
+3 1.608696 45.21739         26.30435       20.91304
+4 1.582278 43.08861         55.29114       49.56962
+5 1.538462 32.69231         86.53846       82.12821
+
+Clustering vector:
+  [1] 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2 3 2
+ [33] 3 2 3 2 3 2 3 2 3 2 3 2 3 2 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4
+ [65] 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4
+ [97] 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 5 1 5 4 5
+[129] 1 5 1 5 1 5 1 5 1 5 1 5 1 5 4 5 1 5 1 5 1 5 1 5 1 5 1 5 1 5 1 5
+[161] 1 5 1 5 1 5 1 5 1 5 1 5 1 5 1 5 1 5 1 5 1 5 1 5 1 5 1 5 1 5 1 5
+[193] 1 5 1 5 1 5 1 5
+
+Within cluster sum of squares by cluster:
+[1] 17678.472  4627.739  8954.087 30157.266 13982.051
+ (between_SS / total_SS =  75.6 %)
+
+Available components:
+
+[1] &quot;cluster&quot;      &quot;centers&quot;      &quot;totss&quot;        &quot;withinss&quot;    
+[5] &quot;tot.withinss&quot; &quot;betweenss&quot;    &quot;size&quot;         &quot;iter&quot;        
+[9] &quot;ifault&quot;      </code></pre>
+</div>
+<p>Let’s break this down step-by-step:</p>
+<ol type="1">
+<li>We called the kmeans function from the cluster package</li>
+</ol>
+<ul>
+<li>kmeans function accepts several arguments, the first is to indicate
+what dataframe the analysis will be based on, in this case “df”</li>
+<li>The other two arguments <strong>centers</strong> and
+<strong>nstart</strong> are core arguments in the k-means analysis.
+Centers</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->

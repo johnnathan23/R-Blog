@@ -14,18 +14,62 @@ output:
 
 Welcome to this short introduction to k-means! First, let me explain what k-means is to give you a better idea on what we will be learning here. 
 
-K-means clustering is a form of **unsupervised machine** learning clustering algorithm which falls under the "partitioning clustering" umbrella. It is unsupervised because it analyses unlabeled data sets without human input. It is a very popular ML clustering algorithm, and very simple to implement in any data set. The other type of clustering is Hierachical clustering, which we will not be touching on here in this post. However, within partitioning clustering, we also have another algorithm called Fuzzy C-Means clustering. 
+K-means clustering is a form of **unsupervised machine learning** clustering algorithm which falls under the "partitioning clustering" umbrella. Unlike supervised machine learning, unsupervised ML does not have access to ground truth to compare the output of the clustering algorithm to the true labels to evaluate its performance. We only want to try to investigate the structure of the data by grouping the data points into distinct subgroups that are as similar together as possible. It is a very popular ML clustering algorithm, and very simple to implement in any data set. The other type of clustering is Hierachical clustering, which we will not be touching on here in this post. However, within partitioning clustering, we also have another algorithm called Fuzzy C-Means clustering. 
 
 The main difference between these two algorithms is that K-means clustering assumes that every data point belongs to one single "cluster". Fuzzy C-Means clustering, on the other hand, relaxes this assumption and provides leeway for some data points to be in two or more clusters. Where you would use K-means clustering for understanding simple patterns in the data set (i.e., what are the characteristics of certain groups), you would use Fuzzy C-Means clustering when the group membership criteria are not as clear cut. For the purposes of this tutorial, we will just focus on K-means clustering
 
-Let's begin by first reading the data set (data obtained from Kaggle)
+Let's begin by first understanding what kind of data we are working with. You can download the data from [Kaggle](https://www.kaggle.com/datasets/vjchoudhary7/customer-segmentation-tutorial-in-python)
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 
+library(dplyr)
+library(tidyverse)
+library(cluster)
+library(factoextra)
+library(gridExtra)
+library(GGally)
+library(plotly)
 
 ```
 
 
+```{r Input Data, echo=TRUE}
+df <- read.csv("customer_data.csv")
+head(df)
+```
 
+Here, we have four usable data columns: Gender, Age, Annual income and Spending Score. For us to generate meaningful k-means clusters, we first need to ensure that the data we have are numbers, not factors or characters. Because Gender is in characters, we either can filter out Males and Females into their separate data sets, or, we can include them into the analysis by dummy-coding them. We will include them into the analysis by dummy coding them
 
+```{r Filtering, echo=TRUE}
+df$Gender[df$Gender == "Male"] <- 1
+df$Gender[df$Gender == "Female"] <- 2
+df$Gender <- as.numeric(df$Gender)
+```
+Because CustomerID is meaningless, merely as a way to differentiate customers, we should remove it from the dataframe to ensure only the relevant data is used for clustering
+
+```{r Remove CustomerID, echo=TRUE}
+df <- df[,2:5]
+head(df)
+```
+
+Our dataframe is now prepared for clustering analysis. Before we proceed, let us try to understand what we are trying to learn from this analysis. In the dataframe, you can see the age, annual income and spending score attached to each customer. One insightful data that we can try to garner from this analysis is to determine the characteristics of subgroups. For example:
+
+* Would older adults with a higher annual income have a higher spending score or would they spend less? 
+* Would there be any difference when we compare between genders? 
+
+These are some questions that we can answer based on the clustering analysis that we will implement. Now, let us load in the required packages and run the clustering analysis
+
+```{r K-Means Clustering, echo=TRUE}
+library(cluster)
+
+model <- kmeans(df, centers = 5, nstart = 20)
+model
+
+```
+
+Let's break this down step-by-step:
+
+1. We called the kmeans function from the cluster package
+ + kmeans function accepts several arguments, the first is to indicate what dataframe the analysis will be based on, in this case "df"
+ + The other two arguments **centers** and **nstart** are core arguments in the k-means analysis. Centers 
