@@ -2,11 +2,7 @@
   {
     "path": "posts/2022-04-19-k-means-clustering-tutorial-customer-demographic-data/",
     "title": "K-Means Clustering Tutorial: Customer Demographic Data",
-<<<<<<< HEAD
     "description": "In this post, we introduce what k-means clustering is, how it works in R, how to interpret\nthe output, and the limitations associated with such unsupervised machine learning modelling",
-=======
-    "description": "A short description of the post.",
->>>>>>> 9fac19397ecbf8d8456fca4b7bd243a2d54ad85b
     "author": [
       {
         "name": "Jonathan Choo",
@@ -17,11 +13,7 @@
     "categories": [],
     "contents": "\r\nTest\r\n\r\n\r\n\r\n",
     "preview": {},
-<<<<<<< HEAD
-    "last_modified": "2022-04-19T10:33:23+08:00",
-=======
-    "last_modified": "2022-04-19T10:30:45+08:00",
->>>>>>> 9fac19397ecbf8d8456fca4b7bd243a2d54ad85b
+    "last_modified": "2022-04-19T10:37:03+08:00",
     "input_file": "k-means-clustering-tutorial-customer-demographic-data.knit.md"
   },
   {

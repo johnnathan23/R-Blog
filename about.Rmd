@@ -1,7 +1,7 @@
 ---
 title: "About this blog"
 description: |
-  Some additional details about the blog
+  A personal blog for the purposes of self-development of R skills, writing introductions to my papers, and developing short tutorials to some R functions that i have learned over the years
 ---
 
 ```{r setup, include=FALSE}
