@@ -1,5 +1,22 @@
 [
   {
+    "path": "posts/2022-04-19-k-means-clustering-tutorial-customer-demographic-data/",
+    "title": "K-Means Clustering Tutorial: Customer Demographic Data",
+    "description": "In this post, we introduce what k-means clustering is, how it works in R, how to interpret\nthe output, and the limitations associated with such unsupervised machine learning modelling",
+    "author": [
+      {
+        "name": "Jonathan Choo",
+        "url": "https://example.com/norajones"
+      }
+    ],
+    "date": "2022-04-19",
+    "categories": [],
+    "contents": "\r\nTest\r\n\r\n\r\n\r\n",
+    "preview": {},
+    "last_modified": "2022-04-19T10:33:23+08:00",
+    "input_file": "k-means-clustering-tutorial-customer-demographic-data.knit.md"
+  },
+  {
     "path": "posts/2022-04-12-creating-a-raincloud-plot/",
     "title": "Creating a Raincloud Plot",
     "description": "This is a short introduction to creating a Raincloud plot, which combines the data visualization of a violin plot with a density plot.",
