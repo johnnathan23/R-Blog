@@ -16,7 +16,11 @@ Welcome to this short introduction to k-means! First, let me explain what k-mean
 
 K-means clustering is a form of **unsupervised machine learning** clustering algorithm which falls under the "partitioning clustering" umbrella. Unlike supervised machine learning, unsupervised ML does not have access to ground truth to compare the output of the clustering algorithm to the true labels to evaluate its performance. We only want to try to investigate the structure of the data by grouping the data points into distinct subgroups that are as similar together as possible. It is a very popular ML clustering algorithm, and very simple to implement in any data set. The other type of clustering is Hierachical clustering, which we will not be touching on here in this post. However, within partitioning clustering, we also have another algorithm called Fuzzy C-Means clustering. 
 
-The main difference between these two algorithms is that K-means clustering assumes that every data point belongs to one single "cluster". Fuzzy C-Means clustering, on the other hand, relaxes this assumption and provides leeway for some data points to be in two or more clusters. Where you would use K-means clustering for understanding simple patterns in the data set (i.e., what are the characteristics of certain groups), you would use Fuzzy C-Means clustering when the group membership criteria are not as clear cut. For the purposes of this tutorial, we will just focus on K-means clustering
+The main difference between these two algorithms is that K-means clustering assumes that every data point belongs to one single "cluster". Fuzzy C-Means clustering, on the other hand, relaxes this assumption and provides leeway for some data points to be in two or more clusters. Where you would use K-means clustering for understanding simple patterns in the data set (i.e., what are the characteristics of certain groups), you would use Fuzzy C-Means clustering when the group membership criteria are not as clear cut. In both cases, the objective is straightforward, group similar data points together to uncover underlying patterns.
+
+For the purposes of this tutorial, we will just focus on K-means clustering.
+
+For K-means to perform its function, it looks for a fixed number (*k*) of clusters in a dataset. A cluster refers to a collection of data points aggregated together because of certain similarities. You first provide an initial *k* value to determine the preliminary model fit. Based on the accuracy of this model, you then increase or decrease the number of clusters that the model should output. We will cover the optimal method to determining the best *k* value, but for now, understand that you provide an arbitrary number of *k* and develop your model from that.
 
 Let's begin by first understanding what kind of data we are working with. You can download the data from [Kaggle](https://www.kaggle.com/datasets/vjchoudhary7/customer-segmentation-tutorial-in-python)
 
@@ -35,7 +39,7 @@ library(plotly)
 
 
 ```{r Input Data, echo=TRUE}
-df <- read.csv("customer_data.csv")
+df <- read.csv("Mall_Customers.csv")
 head(df)
 ```
 
@@ -60,16 +64,27 @@ Our dataframe is now prepared for clustering analysis. Before we proceed, let us
 
 These are some questions that we can answer based on the clustering analysis that we will implement. Now, let us load in the required packages and run the clustering analysis
 
-```{r K-Means Clustering, echo=TRUE}
+```{r K-Means Clustering 1, echo=TRUE}
 library(cluster)
 
 model <- kmeans(df, centers = 5, nstart = 20)
-model
 
 ```
 
 Let's break this down step-by-step:
 
 1. We called the kmeans function from the cluster package
- + kmeans function accepts several arguments, the first is to indicate what dataframe the analysis will be based on, in this case "df"
- + The other two arguments **centers** and **nstart** are core arguments in the k-means analysis. Centers 
+2. Kmeans function accepts several arguments, the first is to indicate what dataframe the analysis will be based on, in this case "df"
+ + The other two arguments **centers** and **nstart** are core arguments in the k-means analysis. 
+ + *centers* = Determines the number of centroids in a given dataset. Centroids are imaginary or real locations representing the center of a cluster
+ + *nstart* = Specifies the number of random data sets used to run the algorithm. Optionally, you can also explicitly determine how many times this process runs by including a *iter.max* argument (default = 10). [Andrea Grianti](https://andrea-grianti.medium.com/kmeans-parameters-in-rstudio-explained-c493ec5a05df) provides an excellent delineation between *nstart* and *interations*, both have similar but distinct meanings:
+ 
+ >if you want 3 clusters and you specify nstart = 10 it extracts 3 sets of data, 10 times, and for each of these times, the algorithm is run (up to iter.max = # of iterations) and the cost function is evaluated so that the lowest is then chosen as the result - Andrea Grianti -
+ 
+3. In the above function, we *arbitrarily* determined the number of centers to be 5 and to sample our dataset using 5 hypothetical centroids 20 times to find the setting with the minimum amount of variance (i.e., within-cluster sum of squares). Because we did not determine the number of max interations, it defaults to 10 interations, that is, it runs the sampling for the minimum within-cluster SS 10 times.
+
+```{r K-Means Clustering 2, echo=FALSE}
+model
+
+```
+
