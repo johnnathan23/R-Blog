@@ -1,8 +1,8 @@
 ---
 title: "K-Means Clustering Tutorial: Customer Demographic Data"
 description: |
-  In this post, we introduce what k-means clustering is, how it works in R, how to interpret
-  the output, and the limitations associated with such unsupervised machine learning modelling
+  In this post, we introduce what k-means clustering is, how it works in R and how to interpret
+  the results to provide actionable outcomes for a hypothetical Mall to improve their profits
 author:
   - name: Jonathan Choo
     Affiliation: University of Nottingham, Malaysia
@@ -21,6 +21,8 @@ The main difference between these two algorithms is that K-means clustering assu
 For the purposes of this tutorial, we will just focus on K-means clustering.
 
 For K-means to perform its function, it looks for a fixed number (*k*) of clusters in a dataset. A cluster refers to a collection of data points aggregated together because of certain similarities. You first provide an initial *k* value to determine the preliminary model fit. Based on the accuracy of this model, you then increase or decrease the number of clusters that the model should output. We will cover the optimal method to determining the best *k* value, but for now, understand that you provide an arbitrary number of *k* and develop your model from that.
+
+## Understanding Our Data
 
 Let's begin by first understanding what kind of data we are working with. You can download the data from [Kaggle](https://www.kaggle.com/datasets/vjchoudhary7/customer-segmentation-tutorial-in-python)
 
@@ -64,6 +66,8 @@ Our dataframe is now prepared for clustering analysis. Before we proceed, let us
 
 These are some questions that we can answer based on the clustering analysis that we will implement. Now, let us load in the required packages and run the clustering analysis
 
+## Implementing K-Means Clustering Algorithm
+
 ```{r K-Means Clustering 1, echo=TRUE}
 library(cluster)
 
@@ -83,6 +87,8 @@ Let's break this down step-by-step:
  
 3. In the above function, we *arbitrarily* determined the number of centers to be 5 and to sample our dataset using 5 hypothetical centroids 20 times to find the setting with the minimum amount of variance (i.e., within-cluster sum of squares). Because we did not determine the number of max interations, it defaults to 10 interations, that is, it runs the sampling for the minimum within-cluster SS 10 times.
 
+## Interpreting K-Means Clustering Output
+
 Below is the output from our clustering analysis
 
 ```{r K-Means Clustering 2, echo=FALSE}
@@ -92,6 +98,88 @@ model
 
 There are several important things to note in this output, let us break it down:
 
-1. 
+1. The first line informs us that 5 clusters were created, and the size of each cluster (i.e., how many data points are included in the cluster) are provided. This gives us a general idea on how many subgroups there are and what are their distribution in our data set.
 
-Recall that in the earlier section, we mention that there is a method to optimally calculate for the best number of clusters for your dataset? 
+2. The second output provides us with the means of each of our variables according to our clusters. The gender column does not provide meaningful data here because it does not make sense for someone to be 1.60 of a gender. The reason why we obtained this value is because the mean is estimated from the centroid location.
+
+3. The clustering vector provides us with a glimpse which data point belongs to which cluster. This information will be useful later on when we aggregate this vector to the main data set, so that we can identify which customer belongs to which cluster.
+
+4. The last output is essential in understanding your clustering accuracy. Remember, the objective here is not to obtain a 100% accuracy. Why? Because a 100% clustering accuracy means that all 200 of our data points are neatly categorized into 200 clusters, which, as you can tell, is not particularly informative
++ Here you can see our within sum of squares by cluster results in a 75.6% accuracy, meaning, 75.6% of the variance is captured by the clustering algorithm, which is not bad, given that we randomly set *k* to be 5
+
+## Determining Optimal *k* Value: Elbow Method
+
+Recall that in the earlier section, we mention that there is a method to optimally calculate for the best number of clusters for your dataset? Here, we will explore this method, first, we create a custom function to plot the within sum of squares, iterating from 1 to n number of centroids. We will not cover how to create a function here, but this [tutorial](https://swcarpentry.github.io/r-novice-inflammation/02-func-R/) provides a good introduction to creating custom functions in R.
+
+```{r Custom WSS Plot Function, echo=TRUE}
+wssplot <- function(data, num.centroid=15, seed=123){
+  wss <- (nrow(data) - 1)*sum(apply(data,2,var))
+  for (i in 2:num.centroid) {
+    set.seed(seed)
+    wss[i] <- sum(kmeans(data, centers = i)$withinss)}
+  plot(1:num.centroid, wss, type = "b", xlab = "Number of groups",
+       ylab = "Sum of squares within a group")}
+
+wssplot(df, num.centroid = 30)
+```
+
+In the above function, we set the maximum number of centroids to be 30, that is, the function loops through the kmeans function by iterating the number of centroids from 1 to 30. The within sum of squares results of each iteration is then taken and plotted. 
+
+Here, you can see that though there was a blip in wss values between *k* = 6 and *k* = 7, it appears that the first initial drop in wss values occured between *k* = 4 and *k* = 5. This means that 5 clusters appear to be the optimal number for our data set.
+
+## Determining Optimal *k* Value: Silhoutte Method
+
+Another way to determine the optimal *k* value, and have been argued to be a better approach than the Elbow method. To begin, let us load our required libraries and begin our Silhoutte (SI) analysis
+
+```{r SI analysis, echo=TRUE}
+library(factoextra)
+
+df_sil <- silhouette(model$cluster, dist(df))
+fviz_silhouette(df_sil)
+
+```
+
+The fviz_silhouette () function outputs a graph that provides us a *Silhoutte Width* value (Y-Axis). This value ranges from -1 to 1. Essentially, a positive SI value means that the data points within that cluster is well matched within its cluster and poorly matched with its neighbouring cluster. A negative SI value would mean that clustering configuration was inappropriate, perhaps either having too many or too few clusters.
+
+Here you can see that all our SI analysis is not too bad, we our clusters average around 0.44 SI. We can try to rerun the analysis using a higher *k* value. Based on the elbow method, it would seem that *k* = 7 may provide a better clustering fit
+
+```{r}
+model <- kmeans(df, centers = 7, nstart = 20)
+
+df_sil <- silhouette(model$cluster, dist(df))
+fviz_silhouette(df_sil)
+
+```
+
+However, running the clustering algorithm with *k* = 7 does not change the SI value at all, remaining at an average of 0.44 SI. Furthermore, it would appear that some data points in our clusters are in a worse position than if we remained *k* at 5. Hence, to reduce overfitting and to adjust for that negative SI data point, we will remain with *k* at 5.
+
+```{r Reinstate original K value , include=FALSE}
+model <- kmeans(df, centers = 5, nstart = 20)
+```
+
+## Analyzing Patterns in Our Clusters
+
+After all that analytical work, we can finally start discovering underlying patterns in our clusters! We first need a couple of other packages, let's load them up and create some plots for our interpretation
+
+```{r  Library Interpret Cluster, echo=TRUE}
+library(GGally)
+library(plotly)
+```
+
+Recall in the earlier section, we talked about the Clustering Vector? Since we have completed our clustering analysis, we will now aggregate the vectors as factors back into our main dataframe. This will help us in plotting based on clusters. The clusters have to be aggregated back as factors, not as vectors or your plot will come out quite weird
+
+```{r}
+df$cluster <- as.factor(model$cluster)
+
+p <- ggparcoord(data = df, columns = c(1:4), groupColumn = "cluster", scale = "std") + labs(x = "Language Aspects", y = "value (in standard-deviation units)", title = "Clustering")
+
+ggplotly(p)
+```
+
+The output of this cluster analysis is up for interpretation and highly depends on what kind of information you require. Here are some notable analysis that can be garnered from this graph
+
++ Cluster 3 and 4 is made up of young adults. Cluster 3 are slightly older young adults with high annual income and high spending score. Cluster 4 are made up of younger young adults with low annual income, but concerningly with a high spending score, indicating that this age group may be spending above their means.
+
++ Clusters 1, 2 and 5 is made up of both young and older adults with varying annual incomes and spending scores.
+
++ Importantly, Cluster 2, which makes up the majority of our customers, have a moderate annual income and spend according to their means. This suggest that the the types of retail shops in this mall should ideally target these audiences. Hence, based on this information, we would suggest that the mall refrain from bringing in too many luxury brands, given that the majority of their customers are from the middle-income bracket and are not high spenders.
