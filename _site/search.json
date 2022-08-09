@@ -6,14 +6,14 @@
       "description": "A personal blog for the purposes of self-development of R skills, writing introductions to my papers, and developing short tutorials to some R functions that i have learned over the years",
       "author": [],
       "contents": "\r\n\r\n\r\n\r\n",
-      "last_modified": "2022-04-19T10:04:07+08:00"
+      "last_modified": "2022-08-09T14:23:52+08:00"
     },
     {
       "path": "index.html",
       "title": "Projects",
       "author": [],
       "contents": "\r\n\r\n\r\n\r\n",
-      "last_modified": "2022-04-20T16:44:46+08:00"
+      "last_modified": "2022-08-09T14:23:53+08:00"
     }
   ],
   "collections": ["posts/posts.json"]

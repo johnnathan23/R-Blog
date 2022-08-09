@@ -1,0 +1,32 @@
+---
+title: "Crash Course on Linear Mixed Models"
+description: |
+  This post is intended as a crash course introduction on LMMs based on how I would have liked to learn the basics of LMMs if I were to learn it from scratch. I am by no means an expert on LMMs, and thus, some information given here might be inaccurate, but where possible, i will cite appropriate papers and books to help assist in further reading and learning
+author:
+  - name: Jonathan Choo
+    Affiliation: University of Nottingham, Malaysia
+date: 2022-08-09
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+Welcome to a crash course on Linear Mixed Models (LMMs)! There are slight variations in the naming conventions of LMMs, you may encounter Linear Mixed Efffect Models, Mixed Models, Mixed Effect Models, rest assured, these all refer to the same concept that we will be going through today.
+
+Before we proceed, this introduction assumes that the reader has:
+
+1. Basics in Statistics in Psychology
+  - Specifically Regression Analysis and Analysis of Variance (ANOVA)
+2. Basics of R language
+3. Basics of Data Structure and Organization
+
+If you are not knowledgeable in these areas, it is highly recommended that you brush up on these skills before attempting this course. 
+
+
+
+
