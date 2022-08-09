@@ -26,8 +26,12 @@ Before we proceed, this introduction assumes that the reader has:
 3. Basics of Data Structure and Organization
 
 If you are not knowledgeable in these areas, it is highly recommended that you brush up on these skills before attempting this course. 
-\
+
 Test
+test
+test
+test
+
 
 
 
