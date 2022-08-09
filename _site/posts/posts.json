@@ -11,10 +11,10 @@
     ],
     "date": "2022-08-09",
     "categories": [],
-    "contents": "\r\nWelcome to a crash course on Linear Mixed Models (LMMs)! There are\r\nslight variations in the naming conventions of LMMs, you may encounter\r\nLinear Mixed Efffect Models, Mixed Models, Mixed Effect Models, rest\r\nassured, these all refer to the same concept that we will be going\r\nthrough today.\r\nBefore we proceed, this introduction assumes that the reader has:\r\nBasics in Statistics in Psychology\r\nSpecifically Regression Analysis and Analysis of Variance\r\n(ANOVA)\r\nBasics of R language\r\nBasics of Data Structure and Organization\r\nIf you are not knowledgeable in these areas, it is highly recommended\r\nthat you brush up on these skills before attempting this course.\r\n\r\n\r\n\r\n",
+    "contents": "\r\nWelcome to a crash course on Linear Mixed Models (LMMs)! There are\r\nslight variations in the naming conventions of LMMs, you may encounter\r\nLinear Mixed Efffect Models, Mixed Models, Mixed Effect Models, rest\r\nassured, these all refer to the same concept that we will be going\r\nthrough today.\r\nBefore we proceed, this introduction assumes that the reader has:\r\nBasics in Statistics in Psychology\r\nSpecifically Regression Analysis and Analysis of Variance\r\n(ANOVA)\r\nBasics of R language\r\nBasics of Data Structure and Organization\r\nIf you are not knowledgeable in these areas, it is highly recommended\r\nthat you brush up on these skills before attempting this course.\r\nTest\r\n\r\n\r\n\r\n",
     "preview": {},
-    "last_modified": "2022-08-09T14:21:58+08:00",
-    "input_file": {}
+    "last_modified": "2022-08-09T14:39:41+08:00",
+    "input_file": "crashcourse-on-linear-mixed-models.knit.md"
   },
   {
     "path": "posts/2022-04-19-k-means-clustering-tutorial-customer-demographic-data/",
