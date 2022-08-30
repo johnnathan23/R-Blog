@@ -2107,11 +2107,15 @@ learning</p></p>
 </div>
 
 <div class="d-article">
-<p>Welcome to a crash course on Linear Mixed Models (LMMs)! There are
-slight variations in the naming conventions of LMMs, you may encounter
-Linear Mixed Efffect Models, Mixed Models, Multi-level Models, rest
-assured, these all refer to the same concept that we will be going
-through today.</p>
+<p>Welcome to a crash course on Linear Mixed Models (LMMs)! This post is
+based heavily on the introductory tutorial written by <a
+href="https://journals.sagepub.com/doi/full/10.1177/2515245920960351">Brown
+(2012)</a>, hence, a lot of the explanations here are paraphrased from
+the original paper, but mixed in with some additional information that
+may help in a clearer understanding. There are slight variations in the
+naming conventions of LMMs, you may encounter Linear Mixed Efffect
+Models, Mixed Models, Multi-level Models, rest assured, these all refer
+to the same concept that we will be going through today.</p>
 <p>Before we proceed, this course assumes that the reader has:</p>
 <ol type="1">
 <li>Basics in Statistics in Psychology</li>
@@ -2129,8 +2133,9 @@ recommended that you brush up on these skills before attempting this
 course.</em></p>
 <p>Have everything? Great! Let us start off with introducing what LMEs
 are</p>
-<h2 id="lmes-the-whats-and-the-whys">LMEs: The Whats and the Whys</h2>
-<h4 id="what">What</h4>
+<h2 id="lmes-the-what-the-why-and-the-how">LMEs: The What, the Why, and
+the How</h2>
+<h3 id="lmes-the-what">LMEs: The What</h3>
 <p>LMEs are essentially a regression analysis on steroids, providing the
 flexibility of traditional regression analysis, but allowing for more
 accurate model fitting compared to regular variance analysis like ANOVA.
@@ -2138,17 +2143,99 @@ It achieves this flexibility by introducing two types of effects:
 <strong>1) Fixed Effects</strong> and <strong>2) Random Effects</strong>
 - hence the name “mixed model”, as it includes both of these effects,
 rather than a traditional Fixed-Effects only model like ANOVAs.</p>
+<h3 id="lmes-the-why">LMEs: The Why</h3>
+<p>Placeholder</p>
+<h3 id="lmes-the-how">LMEs: The How</h3>
 <p>Understanding Fixed Effects and Random Effects is crucial in running
 an LME analysis. To understand what these effects are, <a
 href="http://mfviz.com/hierarchical-models/">Freeman (2017)</a> provides
 an excellent overview along with a beautifully animated visualization on
 Fixed Effects and Random Effects.</p>
-<p><em>It may take a while for the embedded page to load, alternatively,
-head over to <a href="http://mfviz.com/hierarchical-models/">Freeman’s
-(2017)</a> page to view it</em></p>
-<iframe width="1000px" height="1000px" src="http://mfviz.com/hierarchical-models/">
-</iframe>
-<div class="sourceCode" id="cb1"><pre
+<p>In simple words, Fixed effects are usually predictors of interest;
+Random effects (inclusive of both random intercepts and random slopes)
+are predictors that exerts a varying influence on the outcome. Using the
+lme4 package, we can create a model that includes both of these effects.
+The code below exemplifies a typical mixed model</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/lme4/lme4/'>lme4</a></span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Example_Model <span class="ot">&lt;-</span> <span class="fu">lmer</span>(Outcome <span class="sc">~</span>  Fixed Effect <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Random Effect), <span class="at">data =</span> Example_Data)</span></code></pre></div>
+</div>
+<p>A Random Effect term is expressed as (1|X), it is here where you need
+to include vital information about random slopes and intercepts. The
+more random effects you have, and the more complicated the structure is,
+the more likely your model will become overfitted. Also, these random
+effects are usually higher-order grouping variables. Meaning, they
+supersede other experimental variables such as age, SES, Gender. For
+example, the two most common random effects are subjects and stimuli
+because these variables groups other experimental variables under them.
+Importantly, random effects must be a within-subject variable, that is,
+the variable must be the same in all blocks of your experiment. If a
+variable is different in each block, it cannot be a random effect. For
+example, if we wanted to include a by-stimuli random effect, we must
+ensure that the stimuli used is the same across all blocks. If different
+blocks use different types of stimuli, you cannot use that stimuli as a
+random effect. You may consider running an LME on a block-by-block
+basis, but this restricts your analysis.</p>
+<p>Supposing we wanted to include both by-subject and by-stimuli random
+effects, how would it be modelled in R? Take a look at the code
+below:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Example_Model <span class="ot">&lt;-</span> <span class="fu">lmer</span>(Outcome <span class="sc">~</span>  Fixed Effect <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>subject) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>stimuli), <span class="at">data =</span> Example_Data)</span></code></pre></div>
+</div>
+<h4 id="random-intercepts">Random Intercepts</h4>
+<p>To include a random intercept, we include a “1” (i.e. (1|)),
+indicating the intercept, within the random effect structure. This
+informs the model to allow for the intercept to vary for each new
+participant. This is important because as Freeman (2017) suggests, not
+all participants start off at the same level. Allowing for the intercept
+to vary for each participant allows for a better fitting model. This
+goes the same as with the stimuli. Not all stimuli are created equal,
+hence, allowing each stimuli to be evaluated at their own intercept
+creates a better fitted model. The intercept is usually the outcome of
+your model, why? Look at the regression equation below:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>Y</span> <span class='op'>=</span> <span class='va'>mX</span> <span class='op'>+</span> <span class='va'>C</span>
+</code></pre>
+</div>
+</div>
+<p>The Y here indicates your intercept, which is the outcome of the
+model. The X here refers to the values of your X variable, whatever that
+may be. The <em>m</em> refers to the gradient of that particular X
+variable, and the <em>C</em> refers to the residual error.</p>
+<p>So, if our outcome is RT, our random effect structure with random
+intercepts is basically asking the model to allow for every participants
+to “start off” at different RT values. In the case of Freeman (2017),
+their outcome was salary, hence, their by-subject random intercept tells
+the model to allow for every subject to start off at different
+salaries.</p>
+<h4 id="random-slopes">Random Slopes</h4>
+<p>To include a random slope, we first need to identify which of our
+variables of interest could have different effects across subjects. It
+might be easier to understand this by looking at our regression equation
+again. Specifically, random slopes are your <em>m</em> value. Your
+<em>m</em> value determines how “strong” and effect has over the
+outcome, a high value of <em>m</em> suggests that for every one value
+change in your X, it would result in a greater increase/decrease in the
+Y, and vice versa.</p>
+<p>Once we have identified our variable, we can include a random slope
+in our random effect structure by placing the variable to the left of
+the pipe as shown in the code below:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Example_Model <span class="ot">&lt;-</span> <span class="fu">lmer</span>(Outcome <span class="sc">~</span>  Fixed Effect <span class="sc">+</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                        (<span class="dv">1</span> <span class="sc">+</span> Fixed Effect<span class="sc">|</span>subject) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                        (<span class="dv">1</span> <span class="sc">+</span> Fixed Effect<span class="sc">|</span>stimuli), <span class="at">data =</span> Example_Data)</span></code></pre></div>
+</div>
+<p>Here, we took the Fixed Effect and included it as a random slope,
+making the assumption that the effects of the Fixed Effect can change
+across both subject and stimuli. Of course, this must be theoretically
+justified, or your model may not make sense (even if significant)</p>
+<div class="sourceCode" id="cb4"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
