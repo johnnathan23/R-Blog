@@ -2193,15 +2193,32 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 <p>As we are working with bilingual answers (English and Bahasa Malaysia), we also want to remove the BM stopwords. This requires data from the <em>malaytextr</em> package</p>
 <div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"malaytextr"</span><span class='op'>)</span></span></code></pre>
+</div>
 <pre><code>package &#39;malaytextr&#39; successfully unpacked and MD5 sums checked
 
 The downloaded binary packages are in
-    C:\Users\jonch\AppData\Local\Temp\RtmpARcPCt\downloaded_packages</code></pre>
+    C:\Users\jonch\AppData\Local\Temp\RtmpUfSXVU\downloaded_packages</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/zahiernasrudin/malaytextr'>malaytextr</a></span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#We store the stopwords as a matrix in an object called stopmalay</span></span>
+<span><span class='va'>stopmalay</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='fu'>malaytextr</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/malaytextr/man/malaystopwords.html'>malaystopwords</a></span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#We then remove the malay stopwords from the earlier document</span></span>
+<span><span class='va'>docs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/tm/man/tm_map.html'>tm_map</a></span><span class='op'>(</span><span class='va'>docs</span>, <span class='va'>removeWords</span>, <span class='va'>stopmalay</span><span class='op'>)</span></span></code></pre>
+</div>
 </div>
 <p>What you want to do as a next step is to have a new dataframe containing each word in your first column and their frequency in the second column.</p>
 <p>This can be done by creating a document term matrix with the <em>TermDocumentMatrix</em> function from the <em>tm</em> package.</p>
 <div class="layout-chunk" data-layout="l-body">
-
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>dtm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/tm/man/matrix.html'>TermDocumentMatrix</a></span><span class='op'>(</span><span class='va'>docs</span><span class='op'>)</span> </span>
+<span><span class='va'>matrix</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>dtm</span><span class='op'>)</span> </span>
+<span><span class='va'>words</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sort.html'>sort</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>rowSums</a></span><span class='op'>(</span><span class='va'>matrix</span><span class='op'>)</span>,decreasing<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span> </span>
+<span><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>word <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>words</span><span class='op'>)</span>,freq<span class='op'>=</span><span class='va'>words</span><span class='op'>)</span></span></code></pre>
+</div>
 </div>
 <p>Finally, we generate our word cloud using the <em>wordcloud</em> package</p>
 <div class="layout-chunk" data-layout="l-body">

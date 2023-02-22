@@ -74,7 +74,7 @@ docs <- tm_map(docs, removeWords, stopwords("english"))
 
 As we are working with bilingual answers (English and Bahasa Malaysia), we also want to remove the BM stopwords. This requires data from the *malaytextr* package
 
-```{r}
+```{r echo=TRUE}
 install.packages("malaytextr")
 library(malaytextr)
 
@@ -89,7 +89,7 @@ What you want to do as a next step is to have a new dataframe containing each wo
 
 This can be done by creating a document term matrix with the *TermDocumentMatrix* function from the *tm* package.
 
-```{r}
+```{r echo=TRUE}
 dtm <- TermDocumentMatrix(docs) 
 matrix <- as.matrix(dtm) 
 words <- sort(rowSums(matrix),decreasing=TRUE) 
