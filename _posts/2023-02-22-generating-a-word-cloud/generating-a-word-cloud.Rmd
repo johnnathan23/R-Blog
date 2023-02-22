@@ -74,7 +74,7 @@ docs <- tm_map(docs, removeWords, stopwords("english"))
 
 As we are working with bilingual answers (English and Bahasa Malaysia), we also want to remove the BM stopwords. This requires data from the *malaytextr* package
 
-```{r echo=TRUE}
+```{r echo=TRUE, results='hide'}
 install.packages("malaytextr")
 library(malaytextr)
 

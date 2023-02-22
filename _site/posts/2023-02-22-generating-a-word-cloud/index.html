@@ -2194,14 +2194,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <p>As we are working with bilingual answers (English and Bahasa Malaysia), we also want to remove the BM stopwords. This requires data from the <em>malaytextr</em> package</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"malaytextr"</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>package &#39;malaytextr&#39; successfully unpacked and MD5 sums checked
-
-The downloaded binary packages are in
-    C:\Users\jonch\AppData\Local\Temp\RtmpUfSXVU\downloaded_packages</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/zahiernasrudin/malaytextr'>malaytextr</a></span><span class='op'>)</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"malaytextr"</span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/zahiernasrudin/malaytextr'>malaytextr</a></span><span class='op'>)</span></span>
 <span></span>
 <span><span class='co'>#We store the stopwords as a matrix in an object called stopmalay</span></span>
 <span><span class='va'>stopmalay</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='fu'>malaytextr</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/malaytextr/man/malaystopwords.html'>malaystopwords</a></span><span class='op'>)</span></span>
@@ -2246,7 +2240,7 @@ The downloaded binary packages are in
 </div>
 <p>Happy Learning!</p>
 <p>Jonathan</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
