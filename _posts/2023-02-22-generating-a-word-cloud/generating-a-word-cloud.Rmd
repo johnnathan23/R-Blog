@@ -30,7 +30,7 @@ install.packages("dplyr")
 library(dplyr)
 ```
 
-Next, our word cloud will need to take data from a text vector, not a column or matrix. Hence, whichever data that you are using, you need to store your data as a text vector using the *corpus()* function from the *tm* package
+Next, we need to store our text data as a vector so that we can manipulate it easier. To do this, we use the *corpus()* function from the *tm* package to create a corpus of our text data
 
 ```{r echo=TRUE, results='hide'}
 install.packages("tm")
@@ -39,19 +39,19 @@ library(tm)
 
 Then, load up your data into your working directory and workspace. Lets call the dataframe as **dataframe**
 
-```{r include=FALSE}
+```{r ActualRead, include=FALSE}
 
 dataframe <- read.csv("..\\2023-02-22-generating-a-word-cloud\\data.csv")
 dataframe <- dataframe[-c(1,2),]
 ```
 
-```{r eval=FALSE, echo=TRUE}
+```{r TextRead, eval=FALSE, echo=TRUE}
 
 dataframe <- read.csv("your_file.csv")
 
 ```
 
-What you want to do next is to store the text data from your dataframe into a vector and create a corpus *(let's call it docs)* out of that vector. In this example, Q19 contains all the text data information that we want to turn into a word cloud
+What you want to do next is to store the text data from your dataframe into a vector and create a corpus *(let's call this corpus as docs)* out of that vector. In this example, Q19 contains all the text data information that we want to turn into a word cloud
 
 ```{r echo=TRUE}
 #Create a vector containing only the text. 
@@ -61,7 +61,7 @@ textdata <- dataframe$Q19
 docs <- Corpus(VectorSource(textdata))
 ```
 
-Next, we want to make sure that only important/useful words are included in the corpus. Currently, numbers, punctuations and stopwords (e.g., and, the, a, is) are still included in the corpus. We need to clean these up or they will show up in the word cloud. To do so, we use a function from the *tm* package
+Next, we want to make sure that only important/useful words are included in the corpus. Currently, numbers, punctuations and stopwords (e.g., and, the, a, is) are still included in the corpus. We need to clean these up or they will show up in the word cloud. To do so, we use the *tm_map* function from the *tm* package
 
 ```{r echo=TRUE}
 docs <- docs %>%
@@ -70,6 +70,19 @@ docs <- docs %>%
   tm_map(stripWhitespace)
 docs <- tm_map(docs, content_transformer(tolower))
 docs <- tm_map(docs, removeWords, stopwords("english"))
+```
+
+As we are working with bilingual answers (English and Bahasa Malaysia), we also want to remove the BM stopwords. This requires data from the *malaytextr* package
+
+```{r}
+install.packages("malaytextr")
+library(malaytextr)
+
+#We store the stopwords as a matrix in an object called stopmalay
+stopmalay <- as.matrix(malaytextr::malaystopwords)
+
+#We then remove the malay stopwords from the earlier document
+docs <- tm_map(docs, removeWords, stopmalay)
 ```
 
 What you want to do as a next step is to have a new dataframe containing each word in your first column and their frequency in the second column.
@@ -93,6 +106,17 @@ wordcloud(words = df$word, freq = df$freq,
           max.words=200, 
           random.order=FALSE,
           rot.per=0.35,
+          scale=c(2.5,0.25),
           colors=brewer.pal(8, "Dark2"))
 ```
+Sometimes, depending on the size of your corpus, the plot may not show all words. If this is the case, you should play around with the *scale=c(2.5,0.25)* argument until an acceptable number of information is present in your word cloud.
 
+Eagle-eyed individuals will see that we have not used the *wordcloud2* package. This package is a bit more fun to use, allowing us to create word clouds in various shapes such as below:
+
+```{r echo=TRUE}
+wordcloud2(data=df, size = 0.4, shape = 'diamond')
+```
+
+Happy Learning!
+
+Jonathan

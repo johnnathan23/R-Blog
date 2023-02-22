@@ -118,7 +118,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["data.csv","generating-a-word-cloud_files/anchor-4.2.2/anchor.min.js","generating-a-word-cloud_files/bowser-1.9.3/bowser.min.js","generating-a-word-cloud_files/distill-2.2.21/template.v2.js","generating-a-word-cloud_files/figure-html5/unnamed-chunk-7-1.png","generating-a-word-cloud_files/header-attrs-2.20/header-attrs.js","generating-a-word-cloud_files/jquery-3.6.0/jquery-3.6.0.js","generating-a-word-cloud_files/jquery-3.6.0/jquery-3.6.0.min.js","generating-a-word-cloud_files/jquery-3.6.0/jquery-3.6.0.min.map","generating-a-word-cloud_files/popper-2.6.0/popper.min.js","generating-a-word-cloud_files/tippy-6.2.7/tippy-bundle.umd.min.js","generating-a-word-cloud_files/tippy-6.2.7/tippy-light-border.css","generating-a-word-cloud_files/tippy-6.2.7/tippy.css","generating-a-word-cloud_files/tippy-6.2.7/tippy.umd.min.js","generating-a-word-cloud_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["data.csv","generating-a-word-cloud_files/anchor-4.2.2/anchor.min.js","generating-a-word-cloud_files/bowser-1.9.3/bowser.min.js","generating-a-word-cloud_files/distill-2.2.21/template.v2.js","generating-a-word-cloud_files/figure-html5/unnamed-chunk-6-1.png","generating-a-word-cloud_files/figure-html5/unnamed-chunk-7-1.png","generating-a-word-cloud_files/header-attrs-2.20/header-attrs.js","generating-a-word-cloud_files/htmlwidgets-1.6.1/htmlwidgets.js","generating-a-word-cloud_files/jquery-3.6.0/jquery-3.6.0.js","generating-a-word-cloud_files/jquery-3.6.0/jquery-3.6.0.min.js","generating-a-word-cloud_files/jquery-3.6.0/jquery-3.6.0.min.map","generating-a-word-cloud_files/popper-2.6.0/popper.min.js","generating-a-word-cloud_files/tippy-6.2.7/tippy-bundle.umd.min.js","generating-a-word-cloud_files/tippy-6.2.7/tippy-light-border.css","generating-a-word-cloud_files/tippy-6.2.7/tippy.css","generating-a-word-cloud_files/tippy-6.2.7/tippy.umd.min.js","generating-a-word-cloud_files/webcomponents-2.0.0/webcomponents.js","generating-a-word-cloud_files/wordcloud2-0.0.1/hover.js","generating-a-word-cloud_files/wordcloud2-0.0.1/wordcloud.css","generating-a-word-cloud_files/wordcloud2-0.0.1/wordcloud2-all.js","generating-a-word-cloud_files/wordcloud2-binding-0.2.1/wordcloud2.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1476,6 +1476,11 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
   <!--/radix_placeholder_distill-->
   <script src="generating-a-word-cloud_files/header-attrs-2.20/header-attrs.js"></script>
+  <script src="generating-a-word-cloud_files/htmlwidgets-1.6.1/htmlwidgets.js"></script>
+  <link href="generating-a-word-cloud_files/wordcloud2-0.0.1/wordcloud.css" rel="stylesheet" />
+  <script src="generating-a-word-cloud_files/wordcloud2-0.0.1/wordcloud2-all.js"></script>
+  <script src="generating-a-word-cloud_files/wordcloud2-0.0.1/hover.js"></script>
+  <script src="generating-a-word-cloud_files/wordcloud2-binding-0.2.1/wordcloud2.js"></script>
   <script src="generating-a-word-cloud_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
   <script src="generating-a-word-cloud_files/popper-2.6.0/popper.min.js"></script>
   <link href="generating-a-word-cloud_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -1532,7 +1537,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-<p>Next, our word cloud will need to take data from a text vector, not a column or matrix. Hence, whichever data that you are using, you need to store your data as a text vector using the <em>corpus()</em> function from the <em>tm</em> package</p>
+<p>Next, we need to store our text data as a vector so that we can manipulate it easier. To do this, we use the <em>corpus()</em> function from the <em>tm</em> package to create a corpus of our text data</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"tm"</span><span class='op'>)</span></span>
@@ -1545,7 +1550,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>dataframe</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"your_file.csv"</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-<p>What you want to do next is to store the text data from your dataframe into a vector and create a corpus <em>(let’s call it docs)</em> out of that vector. In this example, Q19 contains all the text data information that we want to turn into a word cloud</p>
+<p>What you want to do next is to store the text data from your dataframe into a vector and create a corpus <em>(let’s call this corpus as docs)</em> out of that vector. In this example, Q19 contains all the text data information that we want to turn into a word cloud</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>#Create a vector containing only the text. </span></span>
@@ -1555,7 +1560,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span><span class='va'>docs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/tm/man/Corpus.html'>Corpus</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/tm/man/VectorSource.html'>VectorSource</a></span><span class='op'>(</span><span class='va'>textdata</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-<p>Next, we want to make sure that only important/useful words are included in the corpus. Currently, numbers, punctuations and stopwords (e.g., and, the, a, is) are still included in the corpus. We need to clean these up or they will show up in the word cloud. To do so, we use a function from the <em>tm</em> package</p>
+<p>Next, we want to make sure that only important/useful words are included in the corpus. Currently, numbers, punctuations and stopwords (e.g., and, the, a, is) are still included in the corpus. We need to clean these up or they will show up in the word cloud. To do so, we use the <em>tm_map</em> function from the <em>tm</em> package</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>docs</span> <span class='op'>&lt;-</span> <span class='va'>docs</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
@@ -1565,6 +1570,13 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span><span class='va'>docs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/tm/man/tm_map.html'>tm_map</a></span><span class='op'>(</span><span class='va'>docs</span>, <span class='fu'><a href='https://rdrr.io/pkg/tm/man/content_transformer.html'>content_transformer</a></span><span class='op'>(</span><span class='va'>tolower</span><span class='op'>)</span><span class='op'>)</span></span>
 <span><span class='va'>docs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/tm/man/tm_map.html'>tm_map</a></span><span class='op'>(</span><span class='va'>docs</span>, <span class='va'>removeWords</span>, <span class='fu'><a href='https://rdrr.io/pkg/tm/man/stopwords.html'>stopwords</a></span><span class='op'>(</span><span class='st'>"english"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
+</div>
+<p>As we are working with bilingual answers (English and Bahasa Malaysia), we also want to remove the BM stopwords. This requires data from the <em>malaytextr</em> package</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>package &#39;malaytextr&#39; successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+    C:\Users\jonch\AppData\Local\Temp\RtmpARcPCt\downloaded_packages</code></pre>
 </div>
 <p>What you want to do as a next step is to have a new dataframe containing each word in your first column and their frequency in the second column.</p>
 <p>This can be done by creating a document term matrix with the <em>TermDocumentMatrix</em> function from the <em>tm</em> package.</p>
@@ -1581,11 +1593,23 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span>          max.words<span class='op'>=</span><span class='fl'>200</span>, </span>
 <span>          random.order<span class='op'>=</span><span class='cn'>FALSE</span>,</span>
 <span>          rot.per<span class='op'>=</span><span class='fl'>0.35</span>,</span>
+<span>          scale<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2.5</span>,<span class='fl'>0.25</span><span class='op'>)</span>,</span>
 <span>          colors<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html'>brewer.pal</a></span><span class='op'>(</span><span class='fl'>8</span>, <span class='st'>"Dark2"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
-<p><img src="generating-a-word-cloud_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
+<p><img src="generating-a-word-cloud_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
 </div>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>Sometimes, depending on the size of your corpus, the plot may not show all words. If this is the case, you should play around with the <em>scale=c(2.5,0.25)</em> argument until an acceptable number of information is present in your word cloud.</p>
+<p>Eagle-eyed individuals will see that we have not used the <em>wordcloud2</em> package. This package is a bit more fun to use, allowing us to create word clouds in various shapes such as below:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/pkg/wordcloud2/man/wordcloud2.html'>wordcloud2</a></span><span class='op'>(</span>data<span class='op'>=</span><span class='va'>df</span>, size <span class='op'>=</span> <span class='fl'>0.4</span>, shape <span class='op'>=</span> <span class='st'>'diamond'</span><span class='op'>)</span></span></code></pre>
+</div>
+<div class="wordcloud2 html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-ae1d0915b830e2584f48" style="width:624px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-ae1d0915b830e2584f48">{"x":{"word":["practice","menanam","nothing","recycle","activities","can","pokok","living","sustainable","awareness","comments","process","going","keep","activity","organise","sunday","project","campaigns","organising","surveys","lunch","played","video","hero","hijau","pesta","children","educating","importance","well","earth","safe","reduce","reuse","actually","benefit","exposure","generation","place","recyling","responsible","take","young","melakukan","penambahbaikan","anyone","involved","hands","learning","sportday","bunga","diy","essential","oil","mengadakan","teruskan","campen","complete","fitik","add","support","house","continuously","fabrics","pouch","recycled","use","bring","items","participants","good","recycling"],"freq":[4,3,3,3,3,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"fontFamily":"Segoe UI","fontWeight":"bold","color":"random-dark","minSize":0,"weightFactor":18,"backgroundColor":"white","gridSize":0,"minRotation":-0.785398163397448,"maxRotation":0.785398163397448,"shuffle":true,"rotateRatio":0.4,"shape":"diamond","ellipticity":0.65,"figBase64":null,"hover":null},"evals":[],"jsHooks":{"render":[{"code":"function(el,x){\n                        console.log(123);\n                        if(!iii){\n                          window.location.reload();\n                          iii = False;\n\n                        }\n  }","data":null}]}}</script>
+</div>
+<p>Happy Learning!</p>
+<p>Jonathan</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
