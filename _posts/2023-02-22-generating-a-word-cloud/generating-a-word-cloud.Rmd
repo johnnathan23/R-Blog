@@ -26,8 +26,73 @@ install.packages("RColorBrewer")
 library(RColorBrewer)
 install.packages("wordcloud2")
 library(wordcloud2)
+install.packages("dplyr")
+library(dplyr)
 ```
 
 Next, our word cloud will need to take data from a text vector, not a column or matrix. Hence, whichever data that you are using, you need to store your data as a text vector using the *corpus()* function from the *tm* package
 
+```{r echo=TRUE, results='hide'}
+install.packages("tm")
+library(tm)
+```
+
+Then, load up your data into your working directory and workspace. Lets call the dataframe as **dataframe**
+
+```{r include=FALSE}
+
+dataframe <- read.csv("..\\2023-02-22-generating-a-word-cloud\\data.csv")
+dataframe <- dataframe[-c(1,2),]
+```
+
+```{r eval=FALSE, echo=TRUE}
+
+dataframe <- read.csv("your_file.csv")
+
+```
+
+What you want to do next is to store the text data from your dataframe into a vector and create a corpus *(let's call it docs)* out of that vector. In this example, Q19 contains all the text data information that we want to turn into a word cloud
+
+```{r echo=TRUE}
+#Create a vector containing only the text. 
+textdata <- dataframe$Q19
+
+# Create a corpus  
+docs <- Corpus(VectorSource(textdata))
+```
+
+Next, we want to make sure that only important/useful words are included in the corpus. Currently, numbers, punctuations and stopwords (e.g., and, the, a, is) are still included in the corpus. We need to clean these up or they will show up in the word cloud. To do so, we use a function from the *tm* package
+
+```{r echo=TRUE}
+docs <- docs %>%
+  tm_map(removeNumbers) %>%
+  tm_map(removePunctuation) %>%
+  tm_map(stripWhitespace)
+docs <- tm_map(docs, content_transformer(tolower))
+docs <- tm_map(docs, removeWords, stopwords("english"))
+```
+
+What you want to do as a next step is to have a new dataframe containing each word in your first column and their frequency in the second column.
+
+This can be done by creating a document term matrix with the *TermDocumentMatrix* function from the *tm* package.
+
+```{r}
+dtm <- TermDocumentMatrix(docs) 
+matrix <- as.matrix(dtm) 
+words <- sort(rowSums(matrix),decreasing=TRUE) 
+df <- data.frame(word = names(words),freq=words)
+```
+
+Finally, we generate our word cloud using the *wordcloud* package
+
+```{r echo=TRUE}
+set.seed(1234) # for reproducibility 
+
+wordcloud(words = df$word, freq = df$freq, 
+          min.freq = 1, 
+          max.words=200, 
+          random.order=FALSE,
+          rot.per=0.35,
+          colors=brewer.pal(8, "Dark2"))
+```
 
