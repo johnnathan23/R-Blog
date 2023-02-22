@@ -1,5 +1,22 @@
 [
   {
+    "path": "posts/2023-02-22-generating-a-word-cloud/",
+    "title": "Generating A Word Cloud",
+    "description": "This post is about generating a word cloud. Though you can easily generate one using numerous online programs, utilizing R allows for greater flexibility as well as improving your knowledge of the R Language",
+    "author": [
+      {
+        "name": "Jonathan Choo",
+        "url": {}
+      }
+    ],
+    "date": "2023-02-22",
+    "categories": [],
+    "contents": "\r\nTo start, we first need to install the following packages and load it to our R session\r\n\r\n\r\ninstall.packages(\"wordcloud\")\r\nlibrary(wordcloud)\r\ninstall.packages(\"RColorBrewer\")\r\nlibrary(RColorBrewer)\r\ninstall.packages(\"wordcloud2\")\r\nlibrary(wordcloud2)\r\n\r\n\r\nNext, our word cloud will need to take data from a text vector, not a column or matrix. Hence, whichever data that you are using, you need to store your data as a text vector using the corpus() function from the tm package\r\n\r\n\r\n\r\n",
+    "preview": {},
+    "last_modified": "2023-02-22T12:34:43+08:00",
+    "input_file": "generating-a-word-cloud.knit.md"
+  },
+  {
     "path": "posts/2022-08-09-crashcourse-on-linear-mixed-models/",
     "title": "Crash Course on Linear Mixed Models",
     "description": "This post is intended as a crash course introduction on LMMs based on how I would have liked to learn the basics of LMMs if I were to learn it from scratch. I am by no means an expert on LMMs, and thus, some information given here might be inaccurate, but where possible, i will cite appropriate papers and books to help assist in further reading and learning",

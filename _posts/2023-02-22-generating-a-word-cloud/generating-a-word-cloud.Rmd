@@ -1,0 +1,33 @@
+---
+title: "Generating A Word Cloud"
+description: |
+  This post is about generating a word cloud. Though you can easily generate one using numerous online programs, utilizing R allows for greater flexibility as well as improving your knowledge of the R Language
+author:
+  - name: Jonathan Choo
+    Affiliation: University of Nottingham, Malaysia
+date: 2023-02-22
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+options(repos = list(CRAN="http://cran.rstudio.com/"))
+```
+
+To start, we first need to install the following packages and load it to our R session
+
+```{r Load Packages, echo=TRUE, results='hide'}
+install.packages("wordcloud")
+library(wordcloud)
+install.packages("RColorBrewer")
+library(RColorBrewer)
+install.packages("wordcloud2")
+library(wordcloud2)
+```
+
+Next, our word cloud will need to take data from a text vector, not a column or matrix. Hence, whichever data that you are using, you need to store your data as a text vector using the *corpus()* function from the *tm* package
+
+
