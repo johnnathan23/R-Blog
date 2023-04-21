@@ -2,4 +2,8 @@
 title: "Projects"
 site: distill::distill_website
 listing: posts
+
+##Notes:
+  # To create a new blog post, use the command create_post("title")
 ---
+
