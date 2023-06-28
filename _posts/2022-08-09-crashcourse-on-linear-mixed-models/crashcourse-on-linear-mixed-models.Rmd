@@ -1,5 +1,5 @@
 ---
-title: "Crash Course on Linear Mixed Models"
+title: "Crash Course on Linear Mixed Models TEST"
 description: |
   This post is intended as a crash course introduction on LMMs based on how I would have liked to learn the basics of LMMs if I were to learn it from scratch. I am by no means an expert on LMMs, and thus, some information given here might be inaccurate, but where possible, i will cite appropriate papers and books to help assist in further reading and learning
 author:
