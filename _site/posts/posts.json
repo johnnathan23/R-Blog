@@ -1,5 +1,22 @@
 [
   {
+    "path": "posts/2024-08-06-writing-101-key-summary-of-style-the-basics-of-clarity-and-grace/",
+    "title": "Writing 101: Key Summary of 'Style: The Basics of Clarity and Grace'",
+    "description": "A short description of the post.",
+    "author": [
+      {
+        "name": "Jonathan Choo",
+        "url": {}
+      }
+    ],
+    "date": "2024-08-06",
+    "categories": [],
+    "contents": "\r\nPart 1: Overview and Clarity\r\nOverview of “Style: The Basics of Clarity and Grace”\r\n“Style: The Basics of Clarity and Grace” is structured around several key principles of effective writing:\r\nClarity\r\nCohesion and Coherence\r\nEmphasis\r\nConcision\r\nShape (overall structure)\r\nElegance\r\nThe book argues that good writing is not just about following grammar rules, but about considering the reader’s experience and understanding. It emphasizes that clear, graceful writing stems from clear thinking and a genuine desire to communicate effectively.\r\nImproving Clarity in Writing\r\nUse Strong Subjects and Verbs:\r\nIdentify the main characters (or concepts) in your sentence.\r\nMake these characters the subjects of your sentences.\r\nUse strong, active verbs to show what these characters are doing.\r\nExample:\r\nWeak: There was a decision made by the committee to implement the new policy.\r\nStrong: The committee decided to implement the new policy.\r\nKeep Subjects and Verbs Close:\r\nPlace the subject near the beginning of the sentence.\r\nKeep the verb close to the subject.\r\nAvoid long interruptions between the subject and verb.\r\nExample:\r\nUnclear: The policy, which was controversial due to its potential impact on small businesses and its perceived favoritism towards large corporations, was implemented.\r\nClear: The policy was implemented, despite controversy over its potential impact on small businesses and perceived favoritism towards large corporations.\r\nTurn Nominalizations into Verbs:\r\nIdentify abstract nouns (often ending in -tion, -ment, -ance).\r\nConvert these nouns back into the verbs they come from.\r\nExample:\r\nNominalized: The implementation of the new system resulted in the reduction of errors.\r\nVerbal: Implementing the new system reduced errors.\r\nUse Consistent Subjects:\r\nMaintain a consistent subject across related sentences.\r\nThis helps the reader follow your train of thought more easily.\r\nExample:\r\nInconsistent: The new policy was implemented. It caused controversy among employees. Management defended their decision.\r\nConsistent: Management implemented the new policy. They defended their decision despite controversy among employees.\r\nAvoid Excessive Metadiscourse:\r\nMetadiscourse refers to phrases that comment on the writing itself.\r\nWhile some metadiscourse can be helpful, too much can obscure your main point.\r\nExample:\r\nExcessive: In this essay, I will attempt to argue that, in my opinion, based on the evidence I have examined, it seems that climate change is a significant issue.\r\nImproved: Climate change is a significant issue, as evidenced by rising global temperatures and extreme weather events.\r\nThese principles form the foundation for clear writing. By applying them, you can significantly improve the clarity and directness of your prose.\r\n\r\n\r\n\r\n",
+    "preview": {},
+    "last_modified": "2024-08-06T13:13:42+08:00",
+    "input_file": "writing-101-key-summary-of-style-the-basics-of-clarity-and-grace.knit.md"
+  },
+  {
     "path": "posts/2023-02-22-generating-a-word-cloud/",
     "title": "Generating A Word Cloud",
     "description": "This post is about generating a word cloud. Though you can easily generate one using numerous online programs, utilizing R allows for greater flexibility as well as improving your knowledge of the R Language",
