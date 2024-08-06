@@ -1,5 +1,5 @@
 ---
-title: "Crash Course on Linear Mixed Models TEST"
+title: "Crash Course on Linear Mixed Models"
 description: |
   This post is intended as a crash course introduction on LMMs based on how I would have liked to learn the basics of LMMs if I were to learn it from scratch. I am by no means an expert on LMMs, and thus, some information given here might be inaccurate, but where possible, i will cite appropriate papers and books to help assist in further reading and learning
 author:
@@ -16,7 +16,6 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-This is a test
 Welcome to a crash course on Linear Mixed Models (LMMs)! This post is based heavily on the introductory tutorial written by [Brown (2012)](https://journals.sagepub.com/doi/full/10.1177/2515245920960351), hence, a lot of the explanations here are paraphrased from the original paper, but mixed in with some additional information that may help in a clearer understanding. There are slight variations in the naming conventions of LMMs, you may encounter Linear Mixed Efffect Models, Mixed Models, Multi-level Models, rest assured, these all refer to the same concept that we will be going through today.
 
 Before we proceed, this course assumes that the reader has:
